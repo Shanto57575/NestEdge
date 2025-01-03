@@ -11,6 +11,7 @@ import {
 	FaTimes,
 } from "react-icons/fa";
 import ModeToggle from "./ModeToggle";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,13 +62,18 @@ const Header = () => {
 							<FaInfoCircle className="w-5 h-5" />
 							<span>About</span>
 						</Link>
-						<Link
-							href="/sign-in"
-							className="flex items-center space-x-1 text-foreground hover:text-primary"
-						>
-							<FaUser className="w-5 h-5" />
-							<span>Sign In</span>
-						</Link>
+						<SignedOut>
+							<Link
+								href="/sign-in"
+								className="flex items-center space-x-1 text-foreground hover:text-primary"
+							>
+								<FaUser className="w-5 h-5" />
+								<span>Sign In</span>
+							</Link>
+						</SignedOut>
+						<SignedIn>
+							<UserButton />
+						</SignedIn>
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -122,16 +128,22 @@ const Header = () => {
 									<span>About</span>
 								</div>
 							</Link>
-							<Link
-								href="/sign-in"
-								className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-muted"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								<div className="flex items-center space-x-2">
-									<FaUser className="w-5 h-5" />
-									<span>Sign In</span>
-								</div>
-							</Link>
+
+							<SignedOut>
+								<Link
+									href="/sign-in"
+									className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-muted"
+									onClick={() => setIsMenuOpen(false)}
+								>
+									<div className="flex items-center space-x-2">
+										<FaUser className="w-5 h-5" />
+										<span>Sign In</span>
+									</div>
+								</Link>
+							</SignedOut>
+							<SignedIn>
+								<UserButton />
+							</SignedIn>
 						</div>
 					</div>
 				)}
